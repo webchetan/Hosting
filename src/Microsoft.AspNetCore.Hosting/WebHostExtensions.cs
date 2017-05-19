@@ -90,13 +90,8 @@ namespace Microsoft.AspNetCore.Hosting
                     done.Wait();
                 };
 
-#if NETCOREAPP2_0
-                var assemblyLoadContext = AssemblyLoadContext.GetLoadContext(typeof(WebHostExtensions).GetTypeInfo().Assembly);
-                assemblyLoadContext.Unloading += context => shutdown();
-#elif NETSTANDARD2_0
-#else
-#error Target frameworks need to be updated.
-#endif
+
+                AppDomain.CurrentDomain.ProcessExit += (sender, eventArgs) => shutdown();
                 Console.CancelKeyPress += (sender, eventArgs) =>
                 {
                     shutdown();
