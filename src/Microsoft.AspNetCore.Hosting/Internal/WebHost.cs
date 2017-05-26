@@ -123,7 +123,7 @@ namespace Microsoft.AspNetCore.Hosting.Internal
             _applicationLifetime?.NotifyStarted();
 
             // Fire IHostedService.Start
-            await _hostedServiceExecutor.StartAsync(cancellationToken);
+            await _hostedServiceExecutor.StartAsync(cancellationToken).ConfigureAwait(false);
 
             _logger.Started();
 
@@ -298,7 +298,7 @@ namespace Microsoft.AspNetCore.Hosting.Internal
             // Fire the IHostedService.Stop
             if (_hostedServiceExecutor != null)
             {
-                await _hostedServiceExecutor.StopAsync(cancellationToken);
+                await _hostedServiceExecutor.StopAsync(cancellationToken).ConfigureAwait(false);
             }
 
             // Fire IApplicationLifetime.Stopped
